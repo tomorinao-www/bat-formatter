@@ -1,0 +1,54 @@
+{
+  "name": "bat-file-formatter",
+  "displayName": "BAT File Formatter",
+  "description": "A simple VSCode extension for formatting .bat files",
+  "version": "0.0.2",
+  "publisher": "wwnao",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomorinao-www/bat-formatter.git"
+  },
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:batch"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.formatBatFile",
+        "title": "Format BAT File"
+      }
+    ],
+    "languages": [
+      {
+        "id": "batch",
+        "extensions": [
+          ".bat"
+        ],
+        "aliases": [
+          "Batch",
+          "bat"
+        ]
+      }
+    ]
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "vscode": "^1.65.0",
+    "@types/vscode": "^1.95.0",
+    "@types/mocha": "^10.0.9",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "eslint": "^9.13.0",
+    "typescript": "^5.6.3",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1"
+  }
+}
