@@ -1,6 +1,6 @@
 {
-  "name": "bat-file-formatter",
-  "displayName": "BAT File Formatter",
+  "name": "bat-formatter",
+  "displayName": "bat-formatter",
   "description": "A simple VSCode extension for formatting .bat files",
   "version": "0.0.2",
   "publisher": "wwnao",
