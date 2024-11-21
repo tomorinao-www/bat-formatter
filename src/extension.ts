@@ -3,26 +3,46 @@ import * as vscode from "vscode";
 function formatBatFile(text: string): string {
   // 1. 去除开头和结尾的空白
   text = text.trim();
-  // 2. 处理行尾的空格
-  text = text.replace(/\s+$/gm, "");
-  // 3. 将多个连续空格压缩为两个空格（但忽略引号中的空格）
-  text = text.replace(/(".*?")/g, (match) => match.replace(/ {2,}/g, "  ")); // 先暂时保留引号中的空格
-  text = text.replace(/ {2,}/g, "  "); // 然后处理引号外的空格
+  // 2. 将多个连续空格压缩为2个空格（但保留引号中的空格）
+  // 2.1.保留引号内容
+  let remain: string[] = [];
+  text = text.replace(
+    /".*"/g,
+    (m, i) => `${remain.push(m) ? "" : ""}__PLACEHOLDER__`
+  );
+  text = text.replace(/ {3,}/g, "  ");
+  // 2.1.恢复引号内容
+  let index = 0;
+  text = text.replace(/(__PLACEHOLDER__)/g, (m, i) => remain[index++]);
 
-  // 4. 对每个命令进行格式化：
-  // 4.1. 去除所有行的缩进
-  text = text.replace(/^\s+/gm, ""); // 去除每一行的前导空格
-  // 4.2. 处理多行命令（if, for, goto），后续行需要缩进
-  text = text.replace(/^(if|for|goto)\s+/gm, "$1 "); // 首行命令缩进
-  text = text.replace(/^(\s+)(if|for|goto)\s+/gm, "$1  $2 "); // 后续行缩进
+  // 3. 将多个连续空行压缩为2个空行
+  text = text.replace(/(\r\n){3,}/g, "\r\n\r\n");
+  // 4. 保留 `for`、`if` 等控制结构中的块缩进
+  function deal_mul_lines(
+    text: string = "",
+    indent_nums: number = 2,
+    formattedLines: string[] = []
+  ): string {
+    const lines = text.split("\n");
+    let indent_now = 0;
+    lines.forEach((srcline) => {
+      const line = srcline.trim();
+      let indent_tmp = indent_now;
+      if (/^\s*(for|if|else|do).*?\(\s*$/.test(line)) {
+        // 如果是块起始，增加缩进，但本行不增加缩进
+        indent_now += indent_nums;
+      } else if (indent_nums > 1 && /^\s*\)\s*$/.test(line)) {
+        // 如果是块结束，减少缩进，并且本行也减少缩进
+        indent_now -= indent_nums;
+        indent_tmp = indent_now;
+      }
+      formattedLines.push(" ".repeat(indent_tmp) + line);
+    });
+    return formattedLines.join("\n");
+  }
+  text = deal_mul_lines(text);
 
-  // 5. 格式化注释（保留注释的原格式）
-  text = text.replace(/^rem/gm, "rem");
-
-  // // 6. 将多个连续空行压缩为2个空行
-  // text = text.replace(/(\r?\n){3,}/g, "\n\n");
-
-  // 7. 结尾保留一个空行
+  // 5. 结尾保留一个空行
   text = text + "\n";
   return text;
 }
