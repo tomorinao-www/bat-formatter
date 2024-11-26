@@ -13,7 +13,7 @@
     "email": "me@wwnao.xyz",
     "url": "https://github.com/tomorinao-www/bat-formatter/"
   },
-  "icon": "./icon/icon.png",
+  "icon": "icon/icon.png",
   "scripts": {
     "c": "tsc",
     "eslint": "eslint .",
