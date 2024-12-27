@@ -11,8 +11,8 @@ Language formatter for `.bat` file.
 <details open>
 <summary>English</summary>
 
-- syntax highlight
-- syntax hints
+- remove redundant blank lines
+- control indent
 
 </details>
 
