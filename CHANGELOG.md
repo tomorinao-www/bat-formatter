@@ -31,3 +31,25 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Changed
 
 ### Removed
+
+## [0.0.4] - 2024-11-21
+
+### Added
+
+### Fixed
+
+### Changed
+
+### Removed
+
+## [0.0.5] - 2025-01-31
+
+### Added
+
+### Fixed
+
+- 修复了 bug: 该 bug 曾导致默认 bat 语法高亮失效
+
+### Changed
+
+### Removed

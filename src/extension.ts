@@ -50,7 +50,7 @@ function formatBatFile(text: string): string {
 export function activate(context: vscode.ExtensionContext) {
   // 注册文档格式化器
   const disposable = vscode.languages.registerDocumentFormattingEditProvider(
-    "batch",
+    "bat",
     {
       provideDocumentFormattingEdits(
         document: vscode.TextDocument
